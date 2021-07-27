@@ -6,7 +6,7 @@ git clone www.github.com/grahamhelton/spoofpoint
 cd spoofpoint
 ./spoofpoint -i <inputlist> -d <singledomain>
 ```
-![](attachments/example.gif)
+![](/example.gif)
 
 # Who is this meant for?
 This is meant for people who are tasked with defending an organization of from potential phishing attacks via spoofed domains.
