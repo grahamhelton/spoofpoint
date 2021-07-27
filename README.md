@@ -2,7 +2,7 @@
  Spoofpoint is a domain monitoring tool that allows you to check a single domain or a list of domains to see if they exist.
 
  ```bash
-git clone www.github.com/grahamhelton/spoofpoint
+git https://github.com/grahamhelton/spoofpoint 
 cd spoofpoint
 ./spoofpoint -i <inputlist> -d <singledomain>
 ```
