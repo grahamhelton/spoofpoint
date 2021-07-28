@@ -22,3 +22,6 @@ This is meant for people who are tasked with defending an organization from pote
 
 # Why is this better than <insert big comany's domain monitor tool>
 It's probably not, but it does 95% of what those big companies do except it can be done for free in under 5 minutes.
+Here are some free tools made by people in the community that are also cool! 
+- [spoofable](https://github.com/C0nd4/spoofable) <- Python
+- [PSGet-Domain-MailInfo](https://github.com/dotBATmanNO/PSGet-Domain-MailInfo) <- Powershell
