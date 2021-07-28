@@ -1,11 +1,20 @@
  # What is this?
  Spoofpoint is a domain monitoring tool that allows you to check a single domain or a list of domains to see if they exist.
-
+### Debian 
  ```bash
+sudo apt-get install whois bind9-dnsutils
 git clone https://github.com/grahamhelton/spoofpoint 
 cd spoofpoint
 ./spoofpoint -i <inputlist> -d <singledomain>
 ```
+### Arch
+ ```bash
+sudo pacman -S whois bind9-dnsutils
+git clone https://github.com/grahamhelton/spoofpoint 
+cd spoofpoint
+./spoofpoint -i <inputlist> -d <singledomain>
+```
+!
 ![](/example.gif)
 
 # Who is this meant for?

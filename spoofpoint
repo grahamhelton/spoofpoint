@@ -41,7 +41,7 @@ if [ -n "$domain" ]; then
         whois $domain | head -n 15 
         dig $domain mx | grep -U2 ";; ANSWER" > /dev/null 2>&1
         if [ $? == 0 ]; then
-            echo -e "${red}This domain has MX records set up! This domain could be used for phishing! \n${nocolor}"
+            echo -e "${yellow}This domain has MX records set up!\n${nocolor}"
         else
             echo -e "${yellow}This domain does not have MX records set up${nocolor}"
         fi
@@ -60,7 +60,7 @@ if [ -n "$input" ]; then
             whois $line| head -n 15 
             dig $line mx | grep -U2 ";; ANSWER" > /dev/null 2>&1
             if [ $? == 0 ]; then
-                echo -e "${red}This domain has MX records set up! This domain could be used for phishing!\n${nocolor}"
+                echo -e "${yellow}This domain has MX records set up!\n${nocolor}"
             else
                 echo -e "${yellow}This domain does not have MX records set up${nocolor}"
             fi
