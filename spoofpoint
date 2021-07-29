@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -eu
 
 green="\e[32m"
 nocolor="\e[0m"
@@ -19,11 +20,16 @@ echo -e "${cyan}
 --------------------------------------------------------------
 ${nocolor}
 "
+
+domain=""
+input=""
+
 while getopts d:i: flag
 do 
     case "${flag}" in 
         d) domain=${OPTARG};;
         i) input=${OPTARG};;
+        *) echo "Error" && exit 1 ;;
     esac
 done
 
@@ -35,11 +41,11 @@ fi
 
 # Check if single domain exists
 if [ -n "$domain" ]; then
-    whois $domain | head | grep "Domain Name" > /dev/null 2>&1
+    whois "$domain" | head | grep "Domain Name" > /dev/null 2>&1
     if [ $? == 0 ]; then
         echo -e "\n${red}$newline $domain exists$newline${nocolor}"
-        whois $domain | head -n 15 
-        dig $domain mx | grep -U2 ";; ANSWER" > /dev/null 2>&1
+        whois "$domain" | head -n 15 
+        dig "$domain" mx | grep -U2 ";; ANSWER" > /dev/null 2>&1
         if [ $? == 0 ]; then
             echo -e "${yellow}This domain has MX records set up!\n${nocolor}"
         else
@@ -54,11 +60,11 @@ fi
 
 if [ -n "$input" ]; then
     while IFS= read -r line; do
-        whois $line| head | grep "Domain Name" > /dev/null 2>&1
+        whois "$line" | head | grep "Domain Name" > /dev/null 2>&1
         if [ $? == 0 ]; then
             echo -e "\n${red}$newline $line exists$newline${nocolor}"
-            whois $line| head -n 15 
-            dig $line mx | grep -U2 ";; ANSWER" > /dev/null 2>&1
+            whois "$line" | head -n 15 
+            dig "$line" mx | grep -U2 ";; ANSWER" > /dev/null 2>&1
             if [ $? == 0 ]; then
                 echo -e "${yellow}This domain has MX records set up!\n${nocolor}"
             else
@@ -67,6 +73,6 @@ if [ -n "$input" ]; then
         else
             echo -e "${green}$line is not a valid domain"
         fi
-    done < $input 
+    done < "$input"
 
 fi
