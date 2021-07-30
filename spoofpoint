@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -eu
 
 green="\e[32m"
 nocolor="\e[0m"
@@ -23,20 +22,72 @@ ${nocolor}
 
 domain=""
 input=""
+generateDomain=""
+specialChars=(o l i m)
 
-while getopts d:i: flag
+while getopts d:i:g: flag
 do 
     case "${flag}" in 
         d) domain=${OPTARG};;
         i) input=${OPTARG};;
-        *) echo "Error" && exit 1 ;;
+        g) generateDomain=${OPTARG};;
+        *) echo "Error, please use -d <singleDomain> or -i <inputList>" && exit 1 ;;
     esac
 done
+
+#Grab TLD before stripping
+tld=$(echo "$generateDomain" | cut -d "." -f2)
 
 #Check if there is no input
 if [ $# -eq 0 ]; then
     echo 'Please use -d <Domain>'
     exit 1
+fi
+var=0
+# Replace o with 0
+if [ -n "$generateDomain" ]; then
+        generateDomainStripped=${generateDomain%%.*}
+        gen=($(echo $generateDomainStripped|sed 's/\(.\)/\1 /g'))
+        for i in "${gen[@]}"
+        do 
+            if [[ " $i " =~ ${specialChars[0]} ]]; then 
+                var=$((var+1))
+                echo ${gen[@]} | sed "s/$i/0/$var" | tr -d ' ' >> $generateDomainStripped.txt
+
+            fi
+        done
+# Replace l with I 
+var=0
+        for i in "${gen[@]}"
+        do
+            if [[ " $i " =~ ${specialChars[1]} ]]; then 
+                var=$((var+1))
+                echo ${gen[@]} | sed "s/$i/"1"/$var" | tr -d ' ' >> $generateDomainStripped.txt
+            fi 
+        done
+# Replace i with l 
+var=0
+        for i in "${gen[@]}"
+        do
+            if [[ " $i " =~ ${specialChars[2]} ]]; then 
+                var=$((var+1))
+                echo ${gen[@]} | sed "s/$i/"l"/$var" | tr -d ' ' >>  $generateDomainStripped.txt
+
+            fi 
+        done
+# Replace m  with nn 
+var=0
+        for i in "${gen[@]}"
+        do
+            if [[ " $i " =~ ${specialChars[3]} ]]; then 
+                var=$((var+1))
+                echo ${gen[@]} | sed "s/$i/"nn"/$var" | tr -d ' ' >>  $generateDomainStripped.txt
+            fi 
+        done
+            sed -i -e "s/$/.$tld/" $generateDomainStripped.txt
+            echo -e "${cyan}Generating domains close to $generateDomain${nocolor}"
+            input="$generateDomainStripped.txt"
+            echo -e "${yellow}Saved generated domains to $generateDomainStripped.txt"
 fi
 
 # Check if single domain exists
@@ -57,7 +108,7 @@ if [ -n "$domain" ]; then
     exit 0
 fi
 
-
+# Check entire input list
 if [ -n "$input" ]; then
     while IFS= read -r line; do
         whois "$line" | head | grep "Domain Name" > /dev/null 2>&1
@@ -71,8 +122,9 @@ if [ -n "$input" ]; then
                 echo -e "${yellow}This domain does not have MX records set up${nocolor}"
             fi
         else
-            echo -e "${green}$line is not a valid domain"
+            echo -e "${green}$line is not a valid domain! \xE2\x9C\x94 "
         fi
     done < "$input"
 
 fi
+
