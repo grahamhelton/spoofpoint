@@ -85,7 +85,7 @@ var=0
             fi 
         done
             sed -i -e "s/$/.$tld/" $generateDomainStripped.txt
-            echo -e "${cyan}Generating domains close to $generateDomain${nocolor}"
+            echo -e "${cyan}Generating domains close to $generateDomain and checking to see if they've been registered${nocolor}"
             input="$generateDomainStripped.txt"
             echo -e "${yellow}Saved generated domains to $generateDomainStripped.txt"
 fi
