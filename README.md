@@ -1,5 +1,5 @@
  # What is this?
- Spoofpoint is a domain monitoring tool that allows you to check a single domain or a list of domains to see if they exist.
+ Spoofpoint is a domain monitoring tool that allows you to generate domains names one character off of your domain that could have been registered by an attacker attempting to get a domain that looks like yours, check a single domain to see if it is registered, or check a precompiled list of domains to see if they exist.
 # Install
 ### Debian 
  ```bash
