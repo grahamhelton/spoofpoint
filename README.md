@@ -15,6 +15,13 @@ git clone https://github.com/grahamhelton/spoofpoint
 cd spoofpoint
 ./spoofpoint -i <inputlist> -d <singledomain>
 ```
+### MacOS (via [Homebrew](https://brew.sh/))
+```bash
+brew install bind
+git clone https://github.com/grahamhelton/spoofpoint 
+cd spoofpoint
+./spoofpoint -i <inputlist> -d <singledomain>
+```
 # Usage
 Generate domains names one character off of your domain that could have been registered by an attacker attempting to get a domain that looks like yours.
 ```bash
